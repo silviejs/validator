@@ -1,4 +1,4 @@
-const fs = require('fs/promises');
+const fs = require('fs');
 const path = require('path');
 const childProcess = require('child_process');
 
@@ -6,8 +6,11 @@ const rootPath = process.cwd();
 
 (async () => {
 	try {
-		console.log('Cleaning Build Directory...');
-		await fs.rm(path.resolve(rootPath, 'lib'), {recursive: true});
+		const outDir = path.resolve(rootPath, 'lib');
+		if (fs.existsSync(outDir)) {
+			console.log('Cleaning Build Directory...');
+			fs.rmSync(outDir, {recursive: true});
+		}
 
 		console.log('Building...');
 		childProcess.exec(
@@ -18,20 +21,23 @@ const rootPath = process.cwd();
 					console.log('Build Failed: ', buildError);
 				} else {
 					console.log('Generating Type Definitions...');
-					childProcess.exec('ttsc', async (typesError) => {
+					childProcess.exec('tsc', async (typesError) => {
 						if (typesError) {
 							console.log('Build Failed: ', typesError);
 						} else {
 							try {
 								console.log('Copying Package Files...');
 
-								await fs.copyFile(path.resolve(rootPath, 'LICENSE'), path.resolve(rootPath, 'lib/LICENSE'));
-								await fs.copyFile(path.resolve(rootPath, 'README.md'), path.resolve(rootPath, 'lib/README.md'));
+								fs.copyFileSync(path.resolve(rootPath, 'LICENSE'), path.resolve(outDir, 'LICENSE'));
+								fs.copyFileSync(path.resolve(rootPath, 'README.md'), path.resolve(outDir, 'README.md'));
 
-								const packageJson = JSON.parse(await fs.readFile(path.resolve(rootPath, 'package.json'), 'utf8'));
+								const packageJson = JSON.parse(fs.readFileSync(path.resolve(rootPath, 'package.json'), 'utf8'));
+
 								delete packageJson.scripts;
-								await fs.writeFile(
-									path.resolve(rootPath, 'lib/package.json'),
+								delete packageJson.devDependencies;
+
+								fs.writeFileSync(
+									path.resolve(outDir, 'package.json'),
 									JSON.stringify(packageJson, null, '\t'),
 									'utf8'
 								);
