@@ -1,9 +1,10 @@
 {
   "name": "@silviejs/validator",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Silvie JS Validator",
 	"typings": "bootstrap/index.d.ts",
 	"main": "index.js",
+	"type": "module",
 	"scripts": {
 		"build": "node scripts/build.js"
 	},
