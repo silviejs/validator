@@ -1,6 +1,6 @@
 import IValidationRule, { rule } from '../rule';
 import Validator from '../index';
-import {IPVersion, isIP} from 'validator';
+import {isIP} from 'validator';
 
 @rule('ip')
 export default class IPRule implements IValidationRule {

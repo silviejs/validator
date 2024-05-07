@@ -1,6 +1,6 @@
 import IValidationRule, { rule } from '../rule';
 import Validator from '../index';
-import {ISBNVersion, isISBN} from 'validator';
+import {isISBN} from 'validator';
 
 @rule('isbn')
 export default class ISBNRule implements IValidationRule {

@@ -1,6 +1,6 @@
 import IValidationRule, { rule } from '../rule';
 import Validator from '../index';
-import {HashAlgorithm, isHash} from 'validator';
+import {isHash} from 'validator';
 
 @rule('hash')
 export default class HashRule implements IValidationRule {
