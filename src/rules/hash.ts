@@ -1,10 +1,10 @@
 import IValidationRule, { rule } from '../rule';
 import Validator from '../index';
-import { isHash } from 'validator';
+import {HashAlgorithm, isHash} from 'validator';
 
 @rule('hash')
 export default class HashRule implements IValidationRule {
-	validate(validator: Validator, name: string, value: any, algorithm: string): boolean {
+	validate(validator: Validator, name: string, value: any, algorithm: any): boolean {
 		return isHash(value, algorithm);
 	}
 }

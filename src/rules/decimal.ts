@@ -4,7 +4,7 @@ import { isDecimal } from 'validator';
 
 @rule('decimal')
 export default class DecimalRule implements IValidationRule {
-	validate(validator: Validator, name: string, value: any, locale = 'en-US'): boolean {
+	validate(validator: Validator, name: string, value: any, locale: any = 'en-US'): boolean {
 		return isDecimal(`${value}`, { locale });
 	}
 }
