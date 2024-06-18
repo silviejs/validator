@@ -35,6 +35,7 @@ const rootPath = process.cwd();
 
 								delete packageJson.scripts;
 								delete packageJson.devDependencies;
+								delete packageJson.type;
 
 								fs.writeFileSync(
 									path.resolve(outDir, 'package.json'),
